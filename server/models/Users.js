@@ -17,9 +17,10 @@ const userSchema = new Schema({
         required:[true,'please fill the email'],
         validate:[emailValidation,'email format is not right']
     },
+    password:String,
     role: {
         type: String
     }, 
 }, {timestamps:true})
 
-module.exports = mongoose.model('User',userSchema)
+module.exports = mongoose.model('Users',userSchema)

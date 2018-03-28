@@ -3,7 +3,6 @@ const goodSchema = require('../models/Goods')
 class Goods {
   static viewAll(req,res){
     goodSchema.find()
-    .populate(categoryId)
     .then(data => {
       res.status(200).json({
         message:'list items:',
@@ -18,11 +17,9 @@ class Goods {
   static create (req,res){
     let obj = {
       name:req.body.name,
-      quantity:req.body.quantity,
       description:req.body.description,
-      price:req.body.price,
-      image:req.file.imageUrl,
-      categoryId:req.body.categoryId
+      price:Number(req.body.price),
+      image:req.body.image
     }
     goodSchema.create(obj)
     .then(data=>{
@@ -45,11 +42,9 @@ class Goods {
     }
     let obj = {
       name:req.body.name,
-      quantity:req.body.quantity,
       description:req.body.description,
-      price:req.body.price,
-      image:req.file.imageUrl,
-      categoryId:req.body.categoryId
+      price:Number(req.body.price),
+      image:req.body.image
     }
     goodSchema.findOneAndUpdate(target,obj,{new:true})
     .then(data =>{
@@ -73,26 +68,6 @@ class Goods {
     .then(data=>{
       res.status(200).json({
         message:'data found',
-        data
-      })
-    })
-    .catch(err=>{
-      res.status(500).json({
-        message:'something went wrong',
-        err
-      })
-    })
-  }
-
-  static findByCategory(req,res){
-    let target = {
-      categoryId:req.params.categoryId
-    }
-    goodSchema.find(target)
-    .populate('categoryId')
-    .then(data=>{
-      res.status(200).json({
-        message:'this is list item in this category',
         data
       })
     })
